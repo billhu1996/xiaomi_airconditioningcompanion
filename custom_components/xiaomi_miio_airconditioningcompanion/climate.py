@@ -312,6 +312,10 @@ class XiaomiAirConditioningCompanion(ClimateEntity):
 
             _LOGGER.debug("Response received: %s", result)
 
+            result = yield from self.hass.async_add_job(partial(func, *args, **kwargs))
+
+            _LOGGER.debug("Second time response received: %s", result)
+
             return result == SUCCESS
         except DeviceException as exc:
             _LOGGER.error(mask_error, exc)
